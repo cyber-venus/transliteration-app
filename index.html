@@ -97,11 +97,11 @@
 
             var str = document.getElementById("name").value;
 
-            const regexp = RegExp('([а-яА-Я]+)([^а-яА-Я]*)', 'g');
+            const regexp = RegExp('([^а-яА-Я]*)([а-яА-Я]+)([^а-яА-Я]*)', 'g');
             const matches = str.matchAll(regexp);
 
             for (const match of matches) {
-                var word = match[1]
+                var word = match[2]
 
                 var root = word
                 var ending = ""
@@ -114,7 +114,7 @@
                     ending = word.substr(word.length - 3)
                 }
 
-                document.getElementById("code").value += TransliterateWord(root) + endingsMap[ending] + match[2];
+                document.getElementById("code").value += match[1] + TransliterateWord(root) + endingsMap[ending] + match[3];
             }
         }
     </script>
