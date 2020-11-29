@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <style>
+        /* Sticky footer styles
+-------------------------------------------------- */
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        body {
+            /* Margin bottom by footer height */
+            margin-bottom: 60px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            /* Set the fixed height of the footer here */
+            height: 60px;
+            line-height: 60px;
+            /* Vertically center the text there */
+            background-color: #f5f5f5;
+        }
+
+        body>.container {
+            padding: 60px 15px 0;
+        }
+
+        .footer>.container {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        code {
+            font-size: 80%;
+        }
+    </style>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <title>Transliteration App</title>
+
+    <script>
+        function TransliterateWord(str) {
+            var link = '';
+            const az = {
+                'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo', 'ж': 'zh',
+                'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n',
+                'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'kh',
+                'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'shch', 'ъ': ' ',
+                'ы': 'y', 'ь': ' ', 'э': 'e', 'ю': 'yu', 'я': 'ya',
+                // Capital letters:
+                'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'Yo', 'Ж': 'Zh', 'З': 'Z', 'И': 'I', 'Й': 'Y',
+                'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N', 'О': 'O', 'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U', 'Ф': 'F', 'Х': 'Kh', 'Ц': 'Ts',
+                'Ч': 'Ch', 'Ш': 'Sh', 'Щ': 'Shch', 'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya'
+            }
+            const azCapital = {
+                'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'YO', 'Ж': 'ZH', 'З': 'Z', 'И': 'I', 'Й': 'Y',
+                'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N', 'О': 'O', 'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U', 'Ф': 'F', 'Х': 'KH', 'Ц': 'TS',
+                'Ч': 'CH', 'Ш': 'SH', 'Щ': 'SHCH', 'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'YU', 'Я': 'YA'
+            }
+            const wordIsCapital = str == str.toUpperCase();
+
+            for (var i = 0; i < str.length; i++) {
+                if (/[а-яёА-ЯЁ]/.test(str.charAt(i))) {
+                    if (wordIsCapital) {
+                        link += azCapital[str.charAt(i)];
+                    } else {
+                        link += az[str.charAt(i)];
+                    }
+                } else {
+                    link += str.charAt(i);
+                }
+            }
+
+            return link
+        }
+
+        function Transliterate() {
+            const endingsMap = {
+                "ый": "y", "Ый": "Y", "ыЙ": "Y", "ЫЙ": "Y",
+                "кий": "ky", "Кий": "KY", "кИй": "KY", "киЙ": "KY", "КИй": "KY", "кИЙ": "KY", "КиЙ": "KY", "КИЙ": "KY",
+                "": ""
+            }
+
+            document.getElementById("code").value = ""
+
+            var str = document.getElementById("name").value;
+
+            const regexp = RegExp('([а-яА-Я]+)([^а-яА-Я]*)', 'g');
+            const matches = str.matchAll(regexp);
+
+            for (const match of matches) {
+                var word = match[1]
+
+                var root = word
+                var ending = ""
+                var word_in_lower = word.toLowerCase();
+                if (word_in_lower.endsWith("ый")) {
+                    root = word.substr(0, word.length - 2)
+                    ending = word.substr(word.length - 2)
+                } else if (word_in_lower.endsWith("кий")) {
+                    root = word.substr(0, word.length - 3)
+                    ending = word.substr(word.length - 3)
+                }
+
+                document.getElementById("code").value += TransliterateWord(root) + endingsMap[ending] + match[2];
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="#">Transliteration App</a>
+        </nav>
+    </header>
+
+    <main role="main" class="container">
+        <div class="shadow-sm p-3 mb-5 bg-white rounded">
+            <div class="row p-1">
+                <div class="col-sm">
+                    <textarea class="form-control" name="name" id="name" rows="3" placeholder="Текст на русском"
+                        oninput="Transliterate()"></textarea>
+                </div>
+                <div class="col-sm">
+                    <textarea class="form-control" readonly name="code" id="code" rows="3"
+                        placeholder="Tekst na russkom"></textarea>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-sm text-center">
+                    <button type="button" class="btn btn-primary" onclick="Transliterate()">Transliterate</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">2020 Sonya Klevtsova</span>
+        </div>
+    </footer>
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
