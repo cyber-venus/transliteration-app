@@ -92,9 +92,8 @@
                 "кий": "ky", "Кий": "KY", "кИй": "KY", "киЙ": "KY", "КИй": "KY", "кИЙ": "KY", "КиЙ": "KY", "КИЙ": "KY",
                 "": ""
             }
-
-            document.getElementById("code").value = ""
-
+            
+            var result = ""
             var str = document.getElementById("name").value;
 
             const regexp = RegExp('([^а-яА-Я]*)([а-яА-Я]+)([^а-яА-Я]*)', 'g');
@@ -114,8 +113,9 @@
                     ending = word.substr(word.length - 3)
                 }
 
-                document.getElementById("code").value += match[1] + TransliterateWord(root) + endingsMap[ending] + match[3];
+                result += match[1] + TransliterateWord(root) + endingsMap[ending] + match[3];
             }
+            document.getElementById("code").value = result.replace(/["«»']/g, "");
         }
     </script>
 </head>
