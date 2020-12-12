@@ -89,7 +89,7 @@
         function Transliterate() {
             const endingsMap = {
                 "ый": "y", "Ый": "Y", "ыЙ": "Y", "ЫЙ": "Y",
-                "кий": "ky", "Кий": "KY", "кИй": "KY", "киЙ": "KY", "КИй": "KY", "кИЙ": "KY", "КиЙ": "KY", "КИЙ": "KY",
+                "кий": "ky", "Кий": "KY", "кИй": "KY", "киЙ": "KY", "КИй": "KY", "кИЙ": "KY", "КиЙ": "KY", "КИЙ": "KY", "ьевич": "yevich", "ьевна": "yevna", "ьев": "yev", "ьева": "yeva",
                 "": ""
             }
             
@@ -111,9 +111,21 @@
                 } else if (word_in_lower.endsWith("кий")) {
                     root = word.substr(0, word.length - 3)
                     ending = word.substr(word.length - 3)
+                } else if (word_in_lower.endsWith("ьевич")){
+                    root = word.substr(0,word.length - 5)
+                    ending = word.substr(word.length - 5)
+                } else if (word_in_lower.endsWith("ьевна")){
+                    root = word.substr(0,word.length - 5)
+                    ending = word.substr(word.length - 5)
+                } else if (word_in_lower.endsWith("ьев")){
+                    root = word.substr(0,word.length - 3)
+                    ending = word.substr(word.length - 3)
+                } else if (word_in_lower.endsWith("ьева")){
+                    root = word.substr(0,word.length - 4)
+                    ending = word.substr(word.length - 4)
                 }
 
-                result += match[1] + TransliterateWord(root) + endingsMap[ending] + match[3];
+                result += match[1] + TransliterateWord(root) + endingsMap[ending] + match[3] ;
             }
             document.getElementById("code").value = result.replace(/["«»']/g, "");
         }
