@@ -96,7 +96,7 @@
             var result = ""
             var str = document.getElementById("name").value;
 
-            const regexp = RegExp('([^а-яА-Я]*)([а-яА-Я]+)([^а-яА-Я]*)', 'g');
+            const regexp = RegExp('([^а-яёА-ЯЁ]*)([а-яёА-Ё]+)([^а-яёА-ЯЁ]*)', 'g');
             const matches = str.matchAll(regexp);
 
             for (const match of matches) {
@@ -162,7 +162,7 @@
 
     <footer class="footer">
         <div class="container">
-            <span class="text-muted">2020 Sonya Klevtsova</span>
+            <span class="text-muted">2021 Sonya Klevtsova</span>
         </div>
     </footer>
 
