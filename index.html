@@ -96,7 +96,7 @@
             var result = ""
             var str = document.getElementById("name").value;
 
-            const regexp = RegExp('([^а-яА-Я]*)([а-яА-Я]+)([^а-яА-Я]*)', 'g');
+            const regexp = RegExp('([^а-яА-ЯёЁ]*)([а-яА-ЯёЁ]+)([^а-яА-ЯёЁ]*)', 'g');
             const matches = str.matchAll(regexp);
 
             for (const match of matches) {
