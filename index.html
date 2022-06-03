@@ -90,13 +90,13 @@
             const endingsMap = {
                 "ый": "y", "Ый": "Y", "ыЙ": "Y", "ЫЙ": "Y",
                 "кий": "ky", "Кий": "KY", "кИй": "KY", "киЙ": "KY", "КИй": "KY", "кИЙ": "KY", "КиЙ": "KY", "КИЙ": "KY", "ьевич": "yevich", "ьевна": "yevna", "ьев": "yev", "ьева": "yeva",
-                "": "", "ьович":"yovich", "ьовна":"yovna"
+                "": "", "ьович":"yovich", "ьовна" : "yovna",
             }
             
             var result = ""
             var str = document.getElementById("name").value;
 
-            const regexp = RegExp('([^а-яА-Я]*)([а-яА-Я]+)([^а-яА-Я]*)', 'g');
+            const regexp = RegExp('([^a-zA-Zа-яА-ЯёЁ]*)([a-zA-Zа-яА-ЯёЁ]+)([^a-zA-Zа-яА-ЯёЁ]*)', 'g');
             const matches = str.matchAll(regexp);
 
             for (const match of matches) {
